@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Fork of https://gist.github.com/wojtekmaj/6defa1f358daae28bd52b7b6dbeb7ab6#file-jest-to-vitest-sh Thanks!!
 
 join_by() {
   local d=${1-} f=${2-}
