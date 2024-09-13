@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Fork of https://gist.github.com/wojtekmaj/6defa1f358daae28bd52b7b6dbeb7ab6#file-jest-to-vitest-sh Thanks!!
 
 join_by() {
   local d=${1-} f=${2-}
@@ -23,7 +22,7 @@ fi
 # - Replace "jest.*" with "vi.*"
 # - Attempt to replace "jest.mock" and "jest.requireActual" with "vi.mock" and "vi.importActual", respectively.
 # - Add "import { describe, expect, it, … } from 'vitest';" to the top of the file
-files=$(find . -type f -name "*.spec.js" -o -name "*.spec.ts" -o -name "*.spec.jsx" -o -name "*.spec.tsx" -o -name "*.test.js" -o -name "*.test.ts" -o -name "*.test.jsx" -o -name "*.test.tsx" | grep -v "node_modules")
+files=$(find . -type f \( -name "*.spec.js" -o -name "*.spec.ts" -o -name "*.spec.jsx" -o -name "*.spec.tsx" -o -name "*.test.js" -o -name "*.test.ts" -o -name "*.test.jsx" -o -name "*.test.tsx" \) -not -path "*/node_modules/*")
 
 for file in $files; do
   echo "Processing $file"
@@ -60,7 +59,7 @@ for file in $files; do
   sed -i '' 's/jest.useRealTimers/vi.useRealTimers/g' $file
 
   # Replace "advanceTimers: jest.advanceTimersByTime" with "advanceTimers: vi.advanceTimersByTime.bind(vi)"
-  sed -i '' 's/advanceTimers: jest.advanceTimersByTime/advanceTimers: vi.advanceTimersByTime.bind(vi)/g' $file
+  sed -i '' 's/jest.advanceTimersByTime/vi.advanceTimersByTime.bind(vi)/g' $file
 
   # Detect jest.mock(). Since vi.mock() uses ESM modules, chances are manual changes
   # are going to be necessary. So, we'll print a warning.
