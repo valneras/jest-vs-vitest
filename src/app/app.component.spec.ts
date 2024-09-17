@@ -20,10 +20,17 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('jest-vs-vitest');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, jest-vs-vitest');
-  });
+  describe('should do something', () =>{
+    beforeEach(() => {
+      console.log("Before each debug")
+    })
+    it('should render title', () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      fixture.detectChanges();
+      const compiled = fixture.nativeElement as HTMLElement;
+      expect(compiled.querySelector('h1')?.textContent).toContain('Hello, jest-vs-vitest');
+    });
+  })
+
+
 });
